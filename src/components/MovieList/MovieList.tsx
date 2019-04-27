@@ -14,7 +14,7 @@ const MovieList = () => (
         <div className="movie-list">
           {movies.map(
             (movie: {
-              id: string | number | undefined;
+              id: string;
               title: string;
               overview: string;
               posterUrl: string;
