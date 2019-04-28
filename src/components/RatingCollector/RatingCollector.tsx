@@ -13,17 +13,17 @@ const RatingCollector: React.FC<{ movieId: string }> = ({ movieId }) => {
   React.useEffect(() => {
     setUserId(getUserId()!);
   });
-  
-  return (
+
+  return userId ? (
     <Query
       query={GET_RATING}
       variables={{ getRatingInput: { movieId, userId } }}
     >
-      {({ data }) =>
-        data.score ? (
+      {({ data }) => {
+        return data.movieUserRating && data.movieUserRating.score ? (
           <div>
             <Star nativeColor="#ff9800" />
-            <span> Your Rating: {data.score}</span>
+            <span> Your Rating: {data.movieUserRating.score}</span>
           </div>
         ) : (
           <Mutation mutation={SET_RATING}>
@@ -42,10 +42,10 @@ const RatingCollector: React.FC<{ movieId: string }> = ({ movieId }) => {
               return <RatingStars onSetRating={onSetRating} />;
             }}
           </Mutation>
-        )
-      }
+        );
+      }}
     </Query>
-  );
+  ) : null;
 };
 
 export default RatingCollector;
